@@ -1,0 +1,30 @@
+# Caddy 反向代理配置模板
+# 用法：
+#   1. 把 codex.example.com 替换为你的域名（A 记录已指向本机，80/443 已放行）
+#   2. sudo cp deploy/Caddyfile.example /etc/caddy/Caddyfile
+#   3. sudo systemctl reload caddy
+# 证书由 Caddy 自动从 Let's Encrypt 申请并续期，无需任何手动操作。
+# WebSocket（/ws 与 /terminal）由 reverse_proxy 原生透传，无需额外配置。
+
+codex.example.com {
+	encode zstd gzip
+
+	# 流式输出与长连接需要放宽超时
+	reverse_proxy 127.0.0.1:8899 {
+		transport http {
+			read_timeout 3600s
+			write_timeout 3600s
+		}
+	}
+
+	# 可选：附件上传上限为 25MiB，预留少量裕量
+	# request_body {
+	# 	max_size 32MB
+	# }
+
+	header {
+		# 安全响应头（可选，按需调整）
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}

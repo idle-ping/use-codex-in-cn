@@ -1,0 +1,36 @@
+# codex-webui systemd 服务模板
+# 用法：
+#   1. sudo cp deploy/codex-webui.service.example /etc/systemd/system/codex-webui.service
+#   2. 修改下面三处 YOUR_USER 和路径为实际值
+#   3. sudo systemctl daemon-reload && sudo systemctl enable --now codex-webui
+# 注意：HOST 保持 127.0.0.1，对外暴露交给反向代理（见 deploy/README.md 第六节）。
+
+[Unit]
+Description=Codex WebUI
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/codex-webui
+Environment=HOST=127.0.0.1
+Environment=PORT=8899
+Environment=TZ=Asia/Shanghai
+# 可选：Undo/Reapply 允许影响的 git 仓库根目录
+# Environment=CODEX_WEBUI_REVIEW_ROOT=/home/YOUR_USER/projects
+# 可选：默认工作目录（不设则启动页由用户选择项目）
+# Environment=CODEX_WEBUI_CWD=/home/YOUR_USER/projects
+# 可选：多用户团队模式（见 deploy/README.md 第八节）
+# Environment=CODEX_WEBUI_MULTI_USER=true
+# Environment=CODEX_WEBUI_MULTI_USER_ROOT=/srv/codex-webui
+ExecStart=/home/YOUR_USER/.bun/bin/bun run start
+Restart=always
+RestartSec=3
+
+# 基础加固（可选）
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

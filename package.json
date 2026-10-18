@@ -1,0 +1,47 @@
+{
+  "name": "codex-webui",
+  "version": "0.2.0",
+  "private": true,
+  "license": "MIT",
+  "repository": "github:lezi-fun/codex-webui",
+  "bugs": "https://github.com/lezi-fun/codex-webui/issues",
+  "homepage": "https://github.com/lezi-fun/codex-webui#readme",
+  "type": "module",
+  "scripts": {
+    "start": "bun run server.ts",
+    "dev": "bun run dev.ts",
+    "migrate:single-user": "bun run scripts/migrate-single-user.ts",
+    "build": "bun build public/app.js --target=browser --minify --outfile=public/app.bundle.js && bun build server.ts --target=bun --outfile=dist/server.js",
+    "check": "bun build server.ts --target=bun --outfile=/tmp/codex-webui-server-check.js && bun build dev.ts --target=bun --outfile=/tmp/codex-webui-dev-check.js && bun build public/app.js --target=browser --outfile=/tmp/codex-webui-app-check.js",
+    "test": "bun run test:unit",
+    "test:unit": "bun test tests/conversation-history-service.test.ts tests/account-usage.test.ts tests/ui-core.test.ts tests/skill-service.test.ts tests/composer-history-service.test.ts tests/attachment-service.test.ts tests/i18n.test.ts tests/browser-panel.test.ts tests/rendering.test.ts tests/bridge-errors.test.ts tests/folders.test.ts tests/file-search.test.ts tests/file-service.test.ts tests/workspace-files-service.test.ts tests/image-service.test.ts tests/codex-icons.test.ts tests/codex-surfaces.test.ts tests/review-service.test.ts tests/profile-service.test.ts tests/profile-security.test.ts tests/server-security.test.ts tests/password-store.test.ts tests/multi-user-store.test.ts tests/multi-user-config.test.ts tests/user-runtime.test.ts tests/multi-user-codex-runtime.test.ts tests/migration-service.test.ts tests/review-state.test.ts tests/terminal-service.test.ts tests/workspace-context.test.ts tests/session-bridge.test.ts tests/auto-continue-service.test.ts tests/app-server-connection.test.ts tests/live-session-service.test.ts tests/message-queue-service.test.ts tests/static-assets.test.ts tests/project-visibility-service.test.ts",
+    "test:integration": "bun test tests/app-server.integration.test.ts tests/message-queue.integration.test.ts tests/auth-boundary.integration.test.ts tests/project-visibility.integration.test.ts tests/shared-session.integration.test.ts tests/multi-user.integration.test.ts",
+    "test:browser": "bun tests/rendering-security.e2e.mjs && bun tests/account-usage.e2e.mjs && bun tests/browser-smoke.mjs && bun tests/browser-panel.e2e.mjs && bun tests/browser-site-compat.e2e.mjs && bun tests/ws-sse-fallback.e2e.mjs && bun tests/chrome-layout.e2e.mjs && bun tests/conversation-native.e2e.mjs && bun tests/activity-state.e2e.mjs && bun tests/runtime-activity.e2e.mjs && bun tests/composer-submit-state.e2e.mjs && bun tests/composer-history.e2e.mjs && bun tests/composer-attachments.e2e.mjs && bun tests/optimistic-send.e2e.mjs && bun tests/message-queue.e2e.mjs && bun tests/multi-session.e2e.mjs && bun tests/session-list-activity.e2e.mjs && bun tests/project-visibility.e2e.mjs && bun tests/mobile-viewport.e2e.mjs && bun tests/approval-menu.e2e.mjs && bun tests/conversation-loading.e2e.mjs && bun tests/startup-loading.e2e.mjs && bun tests/mobile-model-loading.e2e.mjs && bun tests/file-download.e2e.mjs && bun tests/image-viewer.e2e.mjs && bun tests/composer-native.e2e.mjs && bun tests/composer-autocomplete.e2e.mjs && bun tests/projectless-composer.e2e.mjs && bun tests/terminal-native.e2e.mjs && bun tests/side-utilities.e2e.mjs && bun tests/desktop-shell.e2e.mjs && bun tests/review-turn-selection.e2e.mjs && bun tests/theme-colors.e2e.mjs && bun tests/user-message.e2e.mjs && bun tests/responsive-panels.e2e.mjs && bun tests/summary-scroll.e2e.mjs && bun tests/mobile-layout.test.mjs && bun tests/mobile-device-mode.e2e.mjs && bun tests/surfaces-browser.mjs && bun tests/i18n.e2e.mjs && bun tests/password-login.e2e.mjs && bun tests/password-setup.e2e.mjs",
+    "test:e2e": "bun tests/malformed-url.e2e.mjs && bun tests/account-api.e2e.mjs && bun tests/approval-e2e.mjs && bun tests/review-api-e2e.mjs && bun tests/dev-watch.e2e.mjs"
+  },
+  "dependencies": {
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-html": "^6.4.12",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/lang-rust": "^6.0.2",
+    "@codemirror/lang-sql": "^6.10.0",
+    "@codemirror/lang-xml": "^6.1.0",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "codemirror": "^6.0.2",
+    "dompurify": "^3.3.1",
+    "jsdom": "^26.1.0",
+    "katex": "^0.16.22",
+    "lottie-web": "5.13.0",
+    "marked": "^16.4.2",
+    "node-pty": "^1.1.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.1",
+    "playwright": "^1.61.1"
+  }
+}
